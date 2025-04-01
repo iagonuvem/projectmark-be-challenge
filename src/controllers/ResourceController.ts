@@ -1,25 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { ResourceRepository } from '../repositories/ResourceRepository';
-import { Resource } from '../models/Resource';
-import { v4 as uuidv4 } from 'uuid';
+import { ResourceService } from '../services/ResourceService';
 
 export const ResourceController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const now = new Date().toISOString();
-      const resource: Resource = {
-        id: uuidv4(),
-        topicId: req.body.topicId,
-        url: req.body.url,
-        description: req.body.description,
-        type: req.body.type,
-        createdAt: now,
-        updatedAt: now
-      };
-
-      await ResourceRepository.init();
-      await ResourceRepository.save(resource);
-
+      const resource = await ResourceService.create(req.body);
       res.status(201).json(resource);
     } catch (err) {
       next(err);
@@ -28,8 +13,7 @@ export const ResourceController = {
 
   async findAll(req: Request, res: Response, next: NextFunction) {
     try {
-      await ResourceRepository.init();
-      const resources = await ResourceRepository.findAll();
+      const resources = await ResourceService.findAll();
       res.json(resources);
     } catch (err) {
       next(err);
