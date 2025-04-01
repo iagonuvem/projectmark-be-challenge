@@ -4,6 +4,7 @@ import { TopicNode } from '../interfaces/ITopicTree';
 import { findShortestPath } from '../utils/shortestPath';
 import { v4 as uuidv4 } from 'uuid';
 import { buildTopicTree } from '../utils/topicTreeBuilder';
+import { ErrorType } from '../enums/errors';
 
 interface CreateTopicInput {
   name: string;
@@ -29,8 +30,12 @@ export const TopicService = {
   },
 
   async updateVersion(id: string, data: { content: string }): Promise<Topic> {
+    const err: Error = {
+      name: ErrorType.NOT_FOUND,
+      message: 'Topic not found'
+    }
     const topic = await TopicRepository.findById(id);
-    if (!topic) throw new Error('Topic not found');
+    if (!topic) throw err;
 
     const newVersion = {
       version: topic.versions.length + 1,
@@ -43,11 +48,26 @@ export const TopicService = {
   },
 
   async getVersion(id: string, version: number): Promise<any> {
+    const err: Error = {
+      name: ErrorType.NOT_FOUND,
+      message: 'Topic not found'
+    }
     const topic = await TopicRepository.findById(id);
-    if (!topic) throw new Error('Topic not found');
+    if (!topic) throw err;
     const v = topic.versions.find(v => v.version === version);
-    if (!v) throw new Error('Version not found');
-    return { ...topic, versions: [v] };
+    if (!v) {
+      err.message = 'Version not found';
+      throw err;
+    }
+    return {
+      id: topic.id,
+      name: topic.name,
+      parentTopicId: topic.parentTopicId,
+      topic: topic.createdAt,
+      version: v.version,
+      content: v.content,
+      updatedAt: v.updatedAt
+    };
   },
 
   async getTree(id: string): Promise<TopicNode> {
