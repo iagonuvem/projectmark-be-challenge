@@ -11,5 +11,6 @@ router.put('/:id', requireRole('Admin', 'Editor'), updateTopicValidator, validat
 router.get('/:id/version/:version', requireRole('Admin', 'Editor', 'Viewer'), TopicController.getVersion);
 router.get('/:id/tree', requireRole('Admin', 'Editor', 'Viewer'), getTopicTreeValidator, TopicController.getTree);
 router.get('/path', requireRole('Admin', 'Editor', 'Viewer'), getShortestPathValidator, validateRequest, TopicController.getShortestPath);
+router.get('/:id/resources', requireRole('Admin', 'Editor', 'Viewer'), TopicController.getResources);
 
 export default router;

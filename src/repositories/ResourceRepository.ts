@@ -16,6 +16,11 @@ class ResourceRepositoryClass extends BaseRepository<Resource> {
       resource.updatedAt
     );
   }
+
+  async findByTopicId(topicId: string): Promise<Resource[]> {
+    const rows = await this.db.all<Resource[]>(`SELECT * FROM ${this.tableName} WHERE topicId = ?`, topicId);
+    return rows;
+  }
 }
 
 export const ResourceRepository = new ResourceRepositoryClass();

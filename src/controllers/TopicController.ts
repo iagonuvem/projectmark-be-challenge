@@ -46,5 +46,14 @@ export const TopicController = {
     } catch (err) {
       next(err);
     }
+  },
+
+  async getResources(req: Request, res: Response, next: NextFunction) {
+    try {
+      const resources = await TopicService.getResources(req.params.id);
+      res.json(resources);
+    } catch (err) {
+      next(err);
+    }
   }
 };

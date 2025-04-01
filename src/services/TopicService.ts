@@ -5,6 +5,8 @@ import { findShortestPath } from '../utils/shortestPath';
 import { v4 as uuidv4 } from 'uuid';
 import { buildTopicTree } from '../utils/topicTreeBuilder';
 import { ErrorType } from '../enums/errors';
+import { Resource } from '../models/Resource';
+import { ResourceRepository } from '../repositories/ResourceRepository';
 
 interface CreateTopicInput {
   name: string;
@@ -86,5 +88,10 @@ export const TopicService = {
     });
 
     return findShortestPath(edges, from, to);
+  },
+
+  async getResources(id: string): Promise<Resource[]> {
+    await ResourceRepository.init();
+    return ResourceRepository.findByTopicId(id);
   }
 };
