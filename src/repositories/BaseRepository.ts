@@ -5,6 +5,10 @@ export abstract class BaseRepository<T> {
   protected db!: Database;
   protected abstract tableName: string;
 
+  constructor( ) {
+    this.init();
+  }
+
   async init() {
     this.db = await open({
       filename: './src/db/database.sqlite',

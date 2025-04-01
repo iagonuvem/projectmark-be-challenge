@@ -16,6 +16,10 @@ export function errorHandler(err: any, req: Request, res: Response, next: NextFu
       res.status(401).json({ message: 'Unauthorized', error: err.message });
       break;
 
+    case ErrorType.FORBIDDEN:
+      res.status(403).json({ message: 'Forbidden', error: err.message });
+      break;
+      
     default:
       res.status(500).json({ message: 'Internal Server Error', error: err.message });
   }
