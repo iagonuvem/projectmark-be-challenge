@@ -1,0 +1,41 @@
+{
+  "name": "projectmark-be-challenge",
+  "version": "1.0.0",
+  "description": "projectmark coding challenge",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "ts-node src/server.ts",
+    "migrate": "ts-node src/db/migrations/runMigrations.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iagonuvem/projectmark-be-challenge.git"
+  },
+  "keywords": [
+    "challenge"
+  ],
+  "author": "Iago Nuvem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iagonuvem/projectmark-be-challenge/issues"
+  },
+  "homepage": "https://github.com/iagonuvem/projectmark-be-challenge#readme",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.14",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2"
+  }
+}
