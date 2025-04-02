@@ -1,5 +1,5 @@
 /**
- * 
+ * This is implementation for Djikstra algorithm to find shortest path
  * @param {[string, string][]} edges Array of arrays containing Id + parentId
  * @param start Start ID
  * @param end End ID
