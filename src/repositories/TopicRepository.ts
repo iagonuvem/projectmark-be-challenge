@@ -35,6 +35,15 @@ class TopicRepositoryClass extends BaseRepository<Topic> {
         if (!row) return undefined;
         return { ...row, versions: JSON.parse((row as any).versions) };
     }
+
+    async findAllByParentTopicId(parentTopicId: string): Promise<Topic[]> {
+        const rows = await this.db.all<Topic[]>(`SELECT * FROM ${this.tableName} WHERE parentTopicId = ?`, parentTopicId);
+        return rows;
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.db.run(`DELETE FROM ${this.tableName} WHERE id = ?`, id);
+    }
 }
 
 export const TopicRepository = new TopicRepositoryClass();

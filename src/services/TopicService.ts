@@ -31,6 +31,17 @@ export const TopicService = {
     return topic;
   },
 
+  async deleteTopicAndChildren(id: string): Promise<void> {
+    async function deleteRecursive(topicId: string) {
+      const children = await TopicRepository.findAllByParentTopicId(topicId);
+      for (const child of children) {
+        await deleteRecursive(child.id);
+      }
+      await TopicRepository.delete(topicId);
+    }
+    await deleteRecursive(id);
+  },
+
   async updateVersion(id: string, data: { content: string }): Promise<Topic> {
     const err: Error = {
       name: ErrorType.NOT_FOUND,

@@ -12,5 +12,6 @@ router.get('/:id/version/:version', requireRole('Admin', 'Editor', 'Viewer'), To
 router.get('/:id/tree', requireRole('Admin', 'Editor', 'Viewer'), getTopicTreeValidator, TopicController.getTree);
 router.get('/path', requireRole('Admin', 'Editor', 'Viewer'), getShortestPathValidator, validateRequest, TopicController.getShortestPath);
 router.get('/:id/resources', requireRole('Admin', 'Editor', 'Viewer'), TopicController.getResources);
+router.delete('/:id', requireRole('Admin'), TopicController.remove);
 
 export default router;

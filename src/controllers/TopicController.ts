@@ -11,6 +11,16 @@ export const TopicController = {
     }
   },
 
+  async remove(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      await TopicService.deleteTopicAndChildren(id);
+      res.status(204).send();
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async updateVersion(req: Request, res: Response, next: NextFunction) {
     try {
       const topic = await TopicService.updateVersion(req.params.id, req.body);

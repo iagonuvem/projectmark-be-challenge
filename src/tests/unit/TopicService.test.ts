@@ -2,6 +2,7 @@ import { TopicService } from '../../services/TopicService';
 import { TopicRepository } from '../../repositories/TopicRepository';
 import { ResourceRepository } from '../../repositories/ResourceRepository';
 import { Resource } from '../../models/Resource';
+import { Topic } from '../../models/Topic';
 
 jest.mock('../../repositories/TopicRepository');
 jest.mock('../../services/ResourceService');
@@ -81,5 +82,29 @@ describe('TopicService', () => {
     const tree = await TopicService.getTree('1');
     expect(tree.topic.id).toBe('1');
     expect(tree.children[0].topic.id).toBe('2');
+  });
+
+  it('should delete topic and its children', async () => {
+    const children = [
+      { id: '2', name: 'Child 1', parentTopicId: '1', createdAt: '', versions: [] },
+      { id: '3', name: 'Child 2', parentTopicId: '1', createdAt: '', versions: [] }
+    ];
+
+    (TopicRepository.findAllByParentTopicId as jest.Mock).mockImplementation(async (id: string) => {
+      const map: Record<string, Topic[]> = {
+        '1': children,
+        '2': [],
+        '3': []
+      };
+      return map[id] || [];
+    });
+
+    const deleteSpy = jest.spyOn(TopicRepository, 'delete');
+
+    await TopicService.deleteTopicAndChildren('1');
+
+    expect(deleteSpy).toHaveBeenCalledWith('2');
+    expect(deleteSpy).toHaveBeenCalledWith('3');
+    expect(deleteSpy).toHaveBeenCalledWith('1');
   });
 });

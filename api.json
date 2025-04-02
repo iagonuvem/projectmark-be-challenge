@@ -203,6 +203,39 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "Delete a Topic and Its Children",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/topics/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"topics",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "t1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"description": "Endpoints for Topics management"

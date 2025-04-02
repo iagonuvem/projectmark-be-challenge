@@ -54,6 +54,7 @@ Method | Endpoint    |  Allowed By | Description |
 | GET | api/topics/:id/version/:version | Admin, Editor, Viewer | Get topic version
 | POST | api/topics/ | Admin, Editor | Create a new topic at Version 1
 | PUT | api/topics/:id | Admin, Editor | Create a new version for a topic
+| DELETE | api/topics/:id | Admin | Delete a topic and its childrens
 
 **Resources Endpoints**
 Method | Endpoint    |  Allowed By | Description |
